@@ -6,7 +6,7 @@ import io.quarkus.mongodb.panache.kotlin.PanacheMongoRepository
 import jakarta.enterprise.context.ApplicationScoped
 
 @ApplicationScoped
-class UserEntityRepository: PanacheMongoRepository<UserEntity> {
+class UserEntityRepository : PanacheMongoRepository<UserEntity> {
 
     fun findByEmailAndPassword(logInUserQry: LogInUserQry): UserEntity? =
         find("email = ?1 and password = ?2", logInUserQry.email, logInUserQry.password).firstResult()

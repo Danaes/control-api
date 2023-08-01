@@ -13,7 +13,7 @@ import jakarta.ws.rs.core.Response
 @Path("/auth")
 class AuthenticationResource(
     private val authenticationPort: AuthenticationPort
-){
+) {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

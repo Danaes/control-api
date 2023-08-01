@@ -7,7 +7,7 @@ data class SingUpUserCmd(
     val surname: String,
     val email: String,
     val password: String
-){
+) {
     init {
         if (username.isBlank()) throw BadRequestException("Username may not be blank")
         if (surname.isBlank()) throw BadRequestException("Surname may not be blank")

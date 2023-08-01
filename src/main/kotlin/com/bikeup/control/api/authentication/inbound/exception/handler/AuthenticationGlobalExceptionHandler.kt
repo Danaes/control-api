@@ -1,30 +1,26 @@
 package com.bikeup.control.api.authentication.inbound.exception.handler
 
-import com.bikeup.control.api.authentication.common.core.application.exception.handler.ErrorResponse
+import com.bikeup.control.api.authentication.core.domain.exception.AuthenticationException
 import com.bikeup.control.api.authentication.core.domain.exception.UserNotFoundException
-import jakarta.ws.rs.BadRequestException
+import com.bikeup.control.api.common.core.application.exception.handler.ErrorResponse
 import jakarta.ws.rs.core.Response
 import jakarta.ws.rs.core.Response.Status
-import jakarta.ws.rs.core.Response.Status.*
 import jakarta.ws.rs.ext.ExceptionMapper
 import jakarta.ws.rs.ext.Provider
 
 @Provider
-class AuthenticationGlobalExceptionHandler: ExceptionMapper<Exception> {
+class AuthenticationGlobalExceptionHandler : ExceptionMapper<AuthenticationException> {
 
-    override fun toResponse(exception: Exception): Response {
-        return when (exception){
+    override fun toResponse(exception: AuthenticationException): Response {
+        return when (exception) {
             is UserNotFoundException ->
-                buildResponse(errorMessage = exception.message ?: "User not found", status = NOT_FOUND)
-
-            is BadRequestException ->
-                buildResponse(errorMessage = exception.message ?: "Invalid request", status = BAD_REQUEST)
+                ErrorResponse(message = exception.message ?: "User not found", status = Status.NOT_FOUND).toResponse()
 
             else ->
-                buildResponse(errorMessage = exception.message ?: "Internal server error", status = INTERNAL_SERVER_ERROR)
+                ErrorResponse(
+                    message = exception.message ?: "Internal server error",
+                    status = Status.INTERNAL_SERVER_ERROR
+                ).toResponse()
         }
     }
-
-    private fun buildResponse(errorMessage: String, status: Status): Response =
-        Response.ok(ErrorResponse(errorMessage)).status(status).build()
 }

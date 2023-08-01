@@ -13,7 +13,7 @@ import jakarta.ws.rs.BadRequestException
 @ApplicationScoped
 class UserAdapter(
     private val userEntityRepository: UserEntityRepository
-): UserPort {
+) : UserPort {
 
     override fun save(singUpUserCmd: SingUpUserCmd): User {
         if (userEntityRepository.exists(singUpUserCmd.email)) throw BadRequestException("User already exists")

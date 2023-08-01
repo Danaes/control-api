@@ -7,9 +7,9 @@ data class AuthenticationResponse(
     val fullName: String,
     val email: String,
     val token: String
-){
+) {
 
-    companion object{
+    companion object {
         fun build(user: User, issuer: String): AuthenticationResponse =
             AuthenticationResponse(
                 fullName = "${user.username} ${user.surname}",
