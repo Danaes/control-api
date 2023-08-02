@@ -13,7 +13,7 @@
       - domain
 
 ```mermaid
-  graph LR;
+  graph LR
     c1 -- primary ports ---> i1
     c1 -- secondary ports ---> o1
     o1 --> d1[(Database)]

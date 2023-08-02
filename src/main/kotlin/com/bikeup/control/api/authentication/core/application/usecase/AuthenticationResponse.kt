@@ -11,7 +11,7 @@ data class AuthenticationResponse(
 ) {
 
     companion object {
-        fun build(user: User, issuer: String): AuthenticationResponse =
+        fun map(user: User, issuer: String): AuthenticationResponse =
             AuthenticationResponse(
                 id = user.id,
                 fullName = "${user.username} ${user.surname}",

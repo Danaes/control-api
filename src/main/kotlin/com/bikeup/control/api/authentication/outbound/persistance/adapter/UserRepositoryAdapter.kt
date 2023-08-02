@@ -1,8 +1,8 @@
 package com.bikeup.control.api.authentication.outbound.persistance.adapter
 
-import com.bikeup.control.api.authentication.core.application.port.persistance.UserPort
-import com.bikeup.control.api.authentication.core.application.usecase.LogInUserQry
-import com.bikeup.control.api.authentication.core.application.usecase.SingUpUserCmd
+import com.bikeup.control.api.authentication.core.application.port.output.persistance.UserRepositoryPort
+import com.bikeup.control.api.authentication.core.application.usecase.UserLogInQry
+import com.bikeup.control.api.authentication.core.application.usecase.UserSingUpCmd
 import com.bikeup.control.api.authentication.core.domain.exception.UserNotFoundException
 import com.bikeup.control.api.authentication.core.domain.model.User
 import com.bikeup.control.api.authentication.outbound.persistance.entity.UserEntity
@@ -11,21 +11,21 @@ import jakarta.enterprise.context.ApplicationScoped
 import jakarta.ws.rs.BadRequestException
 
 @ApplicationScoped
-class UserAdapter(
+class UserRepositoryAdapter(
     private val userEntityRepository: UserEntityRepository
-) : UserPort {
+) : UserRepositoryPort {
 
-    override fun save(singUpUserCmd: SingUpUserCmd): User {
-        if (userEntityRepository.exists(singUpUserCmd.email)) throw BadRequestException("User already exists")
+    override fun save(userSingUpCmd: UserSingUpCmd): User {
+        if (userEntityRepository.exists(userSingUpCmd.email)) throw BadRequestException("User already exists")
 
-        val userEntity = UserEntity.create(singUpUserCmd)
+        val userEntity = UserEntity.create(userSingUpCmd)
         userEntity.persist()
 
         return userEntity.toModel()
     }
 
-    override fun find(logInUserQry: LogInUserQry): User {
-        val userEntity = userEntityRepository.findByEmailAndPassword(logInUserQry)
+    override fun find(userLogInQry: UserLogInQry): User {
+        val userEntity = userEntityRepository.findByEmailAndPassword(userLogInQry)
         return userEntity?.toModel() ?: throw UserNotFoundException("Invalid email or password")
     }
 

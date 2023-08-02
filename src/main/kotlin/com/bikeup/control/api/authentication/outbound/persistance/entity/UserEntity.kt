@@ -1,6 +1,6 @@
 package com.bikeup.control.api.authentication.outbound.persistance.entity
 
-import com.bikeup.control.api.authentication.core.application.usecase.SingUpUserCmd
+import com.bikeup.control.api.authentication.core.application.usecase.UserSingUpCmd
 import com.bikeup.control.api.authentication.core.domain.model.User
 import com.bikeup.control.api.common.core.domain.security.USER_ROLE
 import io.quarkus.mongodb.panache.common.MongoEntity
@@ -24,13 +24,13 @@ data class UserEntity @BsonCreator constructor(
         User(id = id, username = username, surname = surname, email = email, roles = roles)
 
     companion object {
-        fun create(singUpUserCmd: SingUpUserCmd): UserEntity =
+        fun create(userSingUpCmd: UserSingUpCmd): UserEntity =
             UserEntity(
                 id = ObjectId().toString(),
-                username = singUpUserCmd.username,
-                surname = singUpUserCmd.surname,
-                email = singUpUserCmd.email,
-                password = singUpUserCmd.password,
+                username = userSingUpCmd.username,
+                surname = userSingUpCmd.surname,
+                email = userSingUpCmd.email,
+                password = userSingUpCmd.password,
                 roles = setOf(USER_ROLE)
             )
     }
