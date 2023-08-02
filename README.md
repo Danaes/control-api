@@ -1,18 +1,6 @@
 # Done tasks
 
 - **Hexagonal architecture** [#6521d6e](https://github.com/Danaes/control-api/commit/6521d6e45d129d13a4933ed95fb0aef24f7532fa)
-  - common -> shared package between bounded contexts
-    - core.application
-  - layers
-    - inbound
-      - rest
-      - exception.handler
-    - outbound
-      - persistence
-    - core
-      - application
-      - domain
-
 ```mermaid
   graph LR
     c1 -- primary ports ---> i1
