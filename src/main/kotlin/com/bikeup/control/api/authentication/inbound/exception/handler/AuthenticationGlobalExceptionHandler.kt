@@ -2,7 +2,7 @@ package com.bikeup.control.api.authentication.inbound.exception.handler
 
 import com.bikeup.control.api.authentication.core.domain.exception.AuthenticationException
 import com.bikeup.control.api.authentication.core.domain.exception.UserNotFoundException
-import com.bikeup.control.api.common.core.application.exception.handler.ErrorResponse
+import com.bikeup.control.api.common.inbound.exception.handler.ErrorResponse
 import jakarta.ws.rs.core.Response
 import jakarta.ws.rs.core.Response.Status
 import jakarta.ws.rs.ext.ExceptionMapper

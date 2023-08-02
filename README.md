@@ -43,11 +43,16 @@
 - **Exception handler**
   - Create custom exceptions
   - Add class with @Provider annotation
+
 ---
 # In progress task
 
-
-
+- **Authorization of endpoints**
+  - Add @RolesAllowed annotation
 
 ---
 # Todo tasks
+
+- **Testing**
+  - Unit tests
+  - Integration tests

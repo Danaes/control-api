@@ -1,4 +1,4 @@
-package com.bikeup.control.api.common.core.application.exception.handler
+package com.bikeup.control.api.common.inbound.exception.handler
 
 import com.fasterxml.jackson.databind.exc.ValueInstantiationException
 import jakarta.ws.rs.BadRequestException

@@ -2,7 +2,7 @@ package com.bikeup.control.api.authentication.outbound.persistance.entity
 
 import com.bikeup.control.api.authentication.core.application.usecase.SingUpUserCmd
 import com.bikeup.control.api.authentication.core.domain.model.User
-import com.bikeup.control.api.authentication.core.domain.valueobject.Role
+import com.bikeup.control.api.common.core.domain.security.USER_ROLE
 import io.quarkus.mongodb.panache.common.MongoEntity
 import io.quarkus.mongodb.panache.kotlin.PanacheMongoEntityBase
 import org.bson.codecs.pojo.annotations.BsonCreator
@@ -17,7 +17,7 @@ data class UserEntity @BsonCreator constructor(
     @BsonProperty("surname") val surname: String,
     @BsonProperty("email") val email: String,
     @BsonProperty("password") val password: String,
-    @BsonProperty("roles") val roles: Set<Role>
+    @BsonProperty("roles") val roles: Set<String>
 ) : PanacheMongoEntityBase() {
 
     fun toModel(): User =
@@ -31,7 +31,7 @@ data class UserEntity @BsonCreator constructor(
                 surname = singUpUserCmd.surname,
                 email = singUpUserCmd.email,
                 password = singUpUserCmd.password,
-                roles = setOf(Role.USER)
+                roles = setOf(USER_ROLE)
             )
     }
 }
