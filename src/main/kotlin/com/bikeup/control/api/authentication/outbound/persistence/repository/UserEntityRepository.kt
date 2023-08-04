@@ -1,7 +1,7 @@
-package com.bikeup.control.api.authentication.outbound.persistance.repository
+package com.bikeup.control.api.authentication.outbound.persistence.repository
 
 import com.bikeup.control.api.authentication.core.application.usecase.UserLogInQry
-import com.bikeup.control.api.authentication.outbound.persistance.entity.UserEntity
+import com.bikeup.control.api.authentication.outbound.persistence.entity.UserEntity
 import io.quarkus.mongodb.panache.kotlin.PanacheMongoRepository
 import jakarta.enterprise.context.ApplicationScoped
 
@@ -11,5 +11,7 @@ class UserEntityRepository : PanacheMongoRepository<UserEntity> {
     fun findByEmailAndPassword(userLogInQry: UserLogInQry): UserEntity? =
         find("email = ?1 and password = ?2", userLogInQry.email, userLogInQry.password).firstResult()
 
-    fun exists(email: String): Boolean = count("email", email) != 0L
+    fun checkEmail(email: String): Boolean = count("email", email) == 1L
+
+    fun findById(id: String): UserEntity? = find("_id", id).firstResult()
 }

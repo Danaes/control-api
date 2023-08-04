@@ -1,4 +1,4 @@
-package com.bikeup.control.api.authentication.outbound.persistance.entity
+package com.bikeup.control.api.authentication.outbound.persistence.entity
 
 import com.bikeup.control.api.authentication.core.application.usecase.UserSingUpCmd
 import com.bikeup.control.api.authentication.core.domain.model.User
@@ -9,6 +9,7 @@ import org.bson.codecs.pojo.annotations.BsonCreator
 import org.bson.codecs.pojo.annotations.BsonId
 import org.bson.codecs.pojo.annotations.BsonProperty
 import org.bson.types.ObjectId
+import java.time.Instant
 
 @MongoEntity(collection = "users")
 data class UserEntity @BsonCreator constructor(
@@ -17,10 +18,12 @@ data class UserEntity @BsonCreator constructor(
     @BsonProperty("surname") val surname: String,
     @BsonProperty("email") val email: String,
     @BsonProperty("password") val password: String,
-    @BsonProperty("roles") val roles: Set<String>
+    @BsonProperty("roles") val roles: Set<String>,
+    @BsonProperty("createdAt") val createdAt: String,
+    @BsonProperty("updatedAt") val updatedAt: String?,
 ) : PanacheMongoEntityBase() {
 
-    fun toModel(): User =
+    fun toDomain(): User =
         User(id = id, username = username, surname = surname, email = email, roles = roles)
 
     companion object {
@@ -31,7 +34,9 @@ data class UserEntity @BsonCreator constructor(
                 surname = userSingUpCmd.surname,
                 email = userSingUpCmd.email,
                 password = userSingUpCmd.password,
-                roles = setOf(USER_ROLE)
+                roles = setOf(USER_ROLE),
+                createdAt = Instant.now().toString(),
+                updatedAt = null
             )
     }
 }

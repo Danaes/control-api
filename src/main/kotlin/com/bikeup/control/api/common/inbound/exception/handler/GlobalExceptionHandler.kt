@@ -11,15 +11,9 @@ import jakarta.ws.rs.ext.Provider
 class GlobalExceptionHandler : ExceptionMapper<Exception> {
     override fun toResponse(exception: Exception): Response {
         return when (exception) {
-            is BadRequestException ->
+            is IllegalStateException, is BadRequestException, is ValueInstantiationException ->
                 ErrorResponse(
                     message = exception.message ?: "Invalid request",
-                    status = Status.BAD_REQUEST
-                ).toResponse()
-
-            is ValueInstantiationException ->
-                ErrorResponse(
-                    message = exception.cause?.message ?: "Invalid request",
                     status = Status.BAD_REQUEST
                 ).toResponse()
 

@@ -9,7 +9,7 @@ import jakarta.ws.rs.ext.ExceptionMapper
 import jakarta.ws.rs.ext.Provider
 
 @Provider
-class AuthenticationGlobalExceptionHandler : ExceptionMapper<AuthenticationException> {
+class AuthenticationExceptionHandler : ExceptionMapper<AuthenticationException> {
 
     override fun toResponse(exception: AuthenticationException): Response {
         return when (exception) {
