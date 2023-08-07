@@ -9,4 +9,5 @@ data class ErrorResponse(
 ) {
     fun toResponse(): Response = Response.ok(this).status(status).build()
 
+    override fun toString(): String = "${this.message} - HTTP Status Code: ${this.status}"
 }

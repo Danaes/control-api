@@ -7,20 +7,30 @@ import jakarta.ws.rs.core.Response
 import jakarta.ws.rs.core.Response.Status
 import jakarta.ws.rs.ext.ExceptionMapper
 import jakarta.ws.rs.ext.Provider
+import org.jboss.logging.Logger
 
 @Provider
 class AuthenticationExceptionHandler : ExceptionMapper<AuthenticationException> {
 
     override fun toResponse(exception: AuthenticationException): Response {
-        return when (exception) {
-            is UserNotFoundException ->
-                ErrorResponse(message = exception.message ?: "User not found", status = Status.NOT_FOUND).toResponse()
+        val errorResponse = getErrorResponse(exception)
+        LOG.error(errorResponse.toString())
 
-            else ->
-                ErrorResponse(
-                    message = exception.message ?: "Internal server error",
-                    status = Status.INTERNAL_SERVER_ERROR
-                ).toResponse()
+        return errorResponse.toResponse()
+    }
+
+    private fun getErrorResponse(exception: AuthenticationException) =
+        when (exception) {
+            is UserNotFoundException ->
+                ErrorResponse(message = exception.message ?: "User not found", status = Status.NOT_FOUND)
+
+            else -> ErrorResponse(
+                message = exception.message ?: "Internal server error",
+                status = Status.INTERNAL_SERVER_ERROR
+            )
         }
+
+    private companion object {
+        val LOG: Logger = Logger.getLogger(AuthenticationExceptionHandler::class.java)
     }
 }

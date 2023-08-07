@@ -7,8 +7,8 @@ import com.bikeup.control.api.bike.core.domain.model.Bike
 interface BikeRepositoryPort {
 
     fun save(bikeCreateCmd: BikeCreateCmd): Bike
-    fun update(bikeUpdateCmd: BikeUpdateCmd): Bike
     fun find(userId: String): List<Bike>
     fun find(userId: String, bikeId: String): Bike
+    fun update(bikeUpdateCmd: BikeUpdateCmd): Bike
     fun delete(userId: String, bikeId: String)
 }

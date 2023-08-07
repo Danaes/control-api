@@ -1,6 +1,6 @@
 package com.bikeup.control.api.bike.outbound.persistence.adapter
 
-import com.bikeup.control.api.authentication.outbound.persistence.repository.UserEntityRepository
+import com.bikeup.control.api.authentication.outbound.persistence.adapter.UserRepositoryAdapter
 import com.bikeup.control.api.bike.core.application.port.output.persistence.BikeRepositoryPort
 import com.bikeup.control.api.bike.core.application.usecase.BikeCreateCmd
 import com.bikeup.control.api.bike.core.application.usecase.BikeUpdateCmd
@@ -14,10 +14,11 @@ import jakarta.ws.rs.BadRequestException
 @ApplicationScoped
 class BikeRepositoryAdapter(
     private val bikeEntityRepository: BikeEntityRepository,
-    private val userEntityRepository: UserEntityRepository
+    private val userRepositoryAdapter: UserRepositoryAdapter,
+    private val equipmentRepositoryAdapter: EquipmentRepositoryAdapter
 ) : BikeRepositoryPort {
     override fun save(bikeCreateCmd: BikeCreateCmd): Bike {
-        validateUserId(bikeCreateCmd.userId)
+        userRepositoryAdapter.checkIfExists(bikeCreateCmd.userId)
 
         val bikeEntity = BikeEntity.create(bikeCreateCmd)
         bikeEntityRepository.persist(bikeEntity)
@@ -26,29 +27,37 @@ class BikeRepositoryAdapter(
     }
 
     override fun update(bikeUpdateCmd: BikeUpdateCmd): Bike {
-        validateUserId(bikeUpdateCmd.userId)
+        userRepositoryAdapter.checkIfExists(bikeUpdateCmd.userId)
 
         val bikeEntity = findBikeEntity(bikeUpdateCmd.id, bikeUpdateCmd.userId!!)
-        val bikeEntityUpdate = bikeEntity.update(bikeUpdateCmd)
-        bikeEntityRepository.update(bikeEntityUpdate)
+        val bikeEntityUpdated = bikeEntity.update(bikeUpdateCmd)
+        bikeEntityRepository.update(bikeEntityUpdated)
 
-        return bikeEntityUpdate.toDomain()
+        return addEquipments(bikeEntityUpdated)
     }
 
     override fun find(userId: String): List<Bike> {
         val bikeEntities = bikeEntityRepository.find(userId)
-        return bikeEntities.map { it.toDomain() }
+        return bikeEntities.map { addEquipments(it) }
     }
 
-    override fun find(userId: String, bikeId: String): Bike = findBikeEntity(bikeId, userId).toDomain()
+    override fun find(userId: String, bikeId: String): Bike {
+        val bikeEntity = findBikeEntity(bikeId, userId)
+        return addEquipments(bikeEntity)
+    }
 
     override fun delete(userId: String, bikeId: String) = bikeEntityRepository.deleteByIdAndUserId(bikeId, userId)
 
-    private fun validateUserId(userId: String?) {
-        check(userId != null) { "UserId must exist" }
+    fun checkIfExists(bikeId: String?) {
+        check(bikeId != null) { "BikeId must exist" }
 
-        if (userEntityRepository.findById(userId) == null)
-            throw BadRequestException("User with id $userId not exists")
+        if (bikeEntityRepository.checkIfExists(bikeId))
+            throw BadRequestException("Bike with id $bikeId not exists")
+    }
+
+    private fun addEquipments(bikeEntity: BikeEntity): Bike {
+        val equipments = equipmentRepositoryAdapter.findByBikeId(bikeEntity.id)
+        return bikeEntity.toDomain(equipments)
     }
 
     private fun findBikeEntity(id: String, userId: String): BikeEntity =

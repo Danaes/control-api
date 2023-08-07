@@ -3,6 +3,7 @@ package com.bikeup.control.api.bike.outbound.persistence.entity
 import com.bikeup.control.api.bike.core.application.usecase.BikeCreateCmd
 import com.bikeup.control.api.bike.core.application.usecase.BikeUpdateCmd
 import com.bikeup.control.api.bike.core.domain.model.Bike
+import com.bikeup.control.api.bike.core.domain.model.Equipment
 import io.quarkus.mongodb.panache.common.MongoEntity
 import io.quarkus.mongodb.panache.kotlin.PanacheMongoEntityBase
 import org.bson.codecs.pojo.annotations.BsonCreator
@@ -23,17 +24,6 @@ data class BikeEntity @BsonCreator constructor(
     @BsonProperty("updatedAt") val updatedAt: String?,
 ) : PanacheMongoEntityBase() {
 
-    fun toDomain(): Bike =
-        Bike(
-            id = this.id,
-            userId = this.userId,
-            brand = this.brand,
-            model = this.model,
-            year = this.year,
-            distance = this.distance,
-            equipments = emptyList()
-        )
-
     fun update(bikeUpdateCmd: BikeUpdateCmd): BikeEntity {
         var bikeEntity = this
 
@@ -44,6 +34,17 @@ data class BikeEntity @BsonCreator constructor(
 
         return bikeEntity.copy(updatedAt = Instant.now().toString())
     }
+
+    fun toDomain(equipments: List<Equipment> = emptyList()): Bike =
+        Bike(
+            id = this.id,
+            userId = this.userId,
+            brand = this.brand,
+            model = this.model,
+            year = this.year,
+            distance = this.distance,
+            equipments = equipments
+        )
 
     companion object {
         fun create(bikeCreateCmd: BikeCreateCmd): BikeEntity =

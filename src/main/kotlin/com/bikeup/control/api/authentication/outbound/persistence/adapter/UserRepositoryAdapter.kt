@@ -29,4 +29,11 @@ class UserRepositoryAdapter(
         return userEntity?.toDomain() ?: throw UserNotFoundException("Invalid email or password")
     }
 
+    fun checkIfExists(userId: String?) {
+        check(userId != null) { "UserId must exist" }
+
+        if (userEntityRepository.checkIfExists(userId))
+            throw BadRequestException("User with id $userId not exists")
+    }
+
 }
