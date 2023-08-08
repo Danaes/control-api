@@ -38,10 +38,9 @@
 
 ---
 # In progress task
-
----
-# Todo tasks
-
 - **Testing**
   - Unit tests
   - Integration tests
+
+---
+# Todo tasks
