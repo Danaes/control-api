@@ -12,9 +12,11 @@ import org.jboss.logging.Logger
 @Provider
 class AuthenticationExceptionHandler : ExceptionMapper<AuthenticationException> {
 
+    private val log = Logger.getLogger(AuthenticationExceptionHandler::class.java)
+
     override fun toResponse(exception: AuthenticationException): Response {
         val errorResponse = getErrorResponse(exception)
-        LOG.error(errorResponse.toString())
+        log.error(errorResponse.toString())
 
         return errorResponse.toResponse()
     }
@@ -22,15 +24,8 @@ class AuthenticationExceptionHandler : ExceptionMapper<AuthenticationException> 
     private fun getErrorResponse(exception: AuthenticationException) =
         when (exception) {
             is UserNotFoundException ->
-                ErrorResponse(message = exception.message ?: "User not found", status = Status.NOT_FOUND)
+                ErrorResponse(message = exception.message!!, status = Status.NOT_FOUND)
 
-            else -> ErrorResponse(
-                message = exception.message ?: "Internal server error",
-                status = Status.INTERNAL_SERVER_ERROR
-            )
+            else -> ErrorResponse(message = exception.message!!, status = Status.INTERNAL_SERVER_ERROR)
         }
-
-    private companion object {
-        val LOG: Logger = Logger.getLogger(AuthenticationExceptionHandler::class.java)
-    }
 }

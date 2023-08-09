@@ -18,7 +18,7 @@ class BikeRepositoryAdapter(
     private val equipmentRepositoryAdapter: EquipmentRepositoryAdapter
 ) : BikeRepositoryPort {
     override fun save(bikeCreateCmd: BikeCreateCmd): Bike {
-        userRepositoryAdapter.checkIfExists(bikeCreateCmd.userId)
+        userRepositoryAdapter.checkExists(bikeCreateCmd.userId)
 
         val bikeEntity = BikeEntity.create(bikeCreateCmd)
         bikeEntityRepository.persist(bikeEntity)
@@ -27,7 +27,7 @@ class BikeRepositoryAdapter(
     }
 
     override fun update(bikeUpdateCmd: BikeUpdateCmd): Bike {
-        userRepositoryAdapter.checkIfExists(bikeUpdateCmd.userId)
+        userRepositoryAdapter.checkExists(bikeUpdateCmd.userId)
 
         val bikeEntity = findBikeEntity(bikeUpdateCmd.id, bikeUpdateCmd.userId!!)
         val bikeEntityUpdated = bikeEntity.update(bikeUpdateCmd)

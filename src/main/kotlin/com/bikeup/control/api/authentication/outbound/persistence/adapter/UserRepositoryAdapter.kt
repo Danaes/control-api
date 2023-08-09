@@ -19,7 +19,7 @@ class UserRepositoryAdapter(
         if (userEntityRepository.checkEmail(userSingUpCmd.email)) throw BadRequestException("User already exists")
 
         val userEntity = UserEntity.create(userSingUpCmd)
-        userEntity.persist()
+        userEntityRepository.persist(userEntity)
 
         return userEntity.toDomain()
     }
@@ -29,10 +29,10 @@ class UserRepositoryAdapter(
         return userEntity?.toDomain() ?: throw UserNotFoundException("Invalid email or password")
     }
 
-    fun checkIfExists(userId: String?) {
+    fun checkExists(userId: String?) {
         check(userId != null) { "UserId must exist" }
 
-        if (userEntityRepository.checkIfExists(userId))
+        if (userEntityRepository.checkNotExists(userId))
             throw BadRequestException("User with id $userId not exists")
     }
 

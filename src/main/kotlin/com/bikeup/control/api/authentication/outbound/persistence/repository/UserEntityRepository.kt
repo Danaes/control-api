@@ -13,5 +13,5 @@ class UserEntityRepository : PanacheMongoRepository<UserEntity> {
 
     fun checkEmail(email: String): Boolean = count("email", email) == 1L
 
-    fun checkIfExists(id: String): Boolean = count("_id", id) != 1L
+    fun checkNotExists(id: String): Boolean = count("_id", id) == 0L
 }

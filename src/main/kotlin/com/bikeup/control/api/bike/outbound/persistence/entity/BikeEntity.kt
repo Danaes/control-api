@@ -14,7 +14,7 @@ import java.time.Instant
 
 @MongoEntity(collection = "bikes")
 data class BikeEntity @BsonCreator constructor(
-    @BsonId var id: String,
+    @BsonId val id: String,
     @BsonProperty("userId") val userId: String,
     @BsonProperty("brand") val brand: String,
     @BsonProperty("model") val model: String,
