@@ -2,7 +2,6 @@ package com.bikeup.control.api.authentication.inbound.exception.handler
 
 import com.bikeup.control.api.authentication.core.domain.exception.AuthenticationException
 import com.bikeup.control.api.authentication.core.domain.exception.UserNotFoundException
-import com.bikeup.control.api.common.inbound.exception.handler.ErrorResponse
 import jakarta.ws.rs.core.Response.Status
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.TestInstance
@@ -28,7 +27,7 @@ class AuthenticationExceptionHandlerTest {
     ) {
         val result = sut.toResponse(exception)
 
-        assertEquals(exception.message!!, (result.entity as ErrorResponse).message)
+        assertEquals(exception.message!!, result.entity)
         assertEquals(expectedStatus.statusCode, result.status)
     }
 
