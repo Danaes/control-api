@@ -28,7 +28,7 @@ class UserEntityRepositoryTest {
     }
 
     @Test
-    fun findByEmailAndPassword_whenUserLogInQryExists_shouldReturnUserEntity() {
+    internal fun findByEmailAndPassword_whenUserLogInQryExists_shouldReturnUserEntity() {
         val userLogInQry = UserLogInQryMother.of(email = USER_ENTITY.email, password = USER_ENTITY.password)
 
         val result = sut.findByEmailAndPassword(userLogInQry)
@@ -37,7 +37,7 @@ class UserEntityRepositoryTest {
     }
 
     @Test
-    fun findByEmailAndPassword_whenUserLogInQryNotExists_shouldReturnNull() {
+    internal fun findByEmailAndPassword_whenUserLogInQryNotExists_shouldReturnNull() {
         val result = sut.findByEmailAndPassword(UserLogInQryMother.of())
 
         assertNull(result)
@@ -57,14 +57,14 @@ class UserEntityRepositoryTest {
     }
 
     @Test
-    fun checkNotExists_whenIdExists_shouldReturnFalse() {
+    internal fun checkNotExists_whenIdExists_shouldReturnFalse() {
         val result = sut.checkNotExists(USER_ENTITY.id)
 
         assertFalse(result)
     }
 
     @Test
-    fun checkNotExists_whenIdNotExists_shouldReturnTrue() {
+    internal fun checkNotExists_whenIdNotExists_shouldReturnTrue() {
         val result = sut.checkNotExists(ObjectId().toString())
 
         assertTrue(result)

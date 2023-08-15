@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class ErrorResponseTest {
 
     @Test
-    fun toResponse_whenMethodIsInvoked_shouldReturnResponseWithCorrectStatus() {
+    internal fun toResponse_whenMethodIsInvoked_shouldReturnResponseWithCorrectStatus() {
         val sut = ErrorResponse("message", Status.NOT_FOUND)
         val expected = Response.ok("message").status(Status.NOT_FOUND).build()
 
@@ -19,7 +19,7 @@ class ErrorResponseTest {
     }
 
     @Test
-    fun toString_whenMethodIsInvoked_shouldReturnCustomString() {
+    internal fun toString_whenMethodIsInvoked_shouldReturnCustomString() {
         val expectedMessage = "message"
         val expectedStatus = Status.NOT_FOUND
         val sut = ErrorResponse(expectedMessage, expectedStatus)

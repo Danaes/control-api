@@ -18,7 +18,7 @@ data class BikeUpdateCmd(
     fun addUserId(userId: String) = this.copy(userId = userId)
 
     companion object {
-        fun build(bike: Bike): BikeUpdateCmd =
+        fun map(bike: Bike): BikeUpdateCmd =
             BikeUpdateCmd(
                 id = bike.id,
                 userId = bike.userId,

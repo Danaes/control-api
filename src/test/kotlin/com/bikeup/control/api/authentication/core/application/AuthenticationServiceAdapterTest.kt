@@ -16,13 +16,13 @@ class AuthenticationServiceAdapterTest {
     private lateinit var sut: AuthenticationServiceAdapter
 
     @BeforeEach
-    fun init() {
+    internal fun init() {
         reset(userRepositoryPort)
         sut = AuthenticationServiceAdapter(ISSUER, userRepositoryPort)
     }
 
     @Test
-    fun signUp_whenUserSingUpCmd_ShouldSaveAndReturnAuthenticationResponse() {
+    internal fun signUp_whenUserSingUpCmd_ShouldSaveAndReturnAuthenticationResponse() {
         val user = buildUser()
         val expected = AuthenticationResponse.map(user, ISSUER)
         `when`(userRepositoryPort.save(USER_SING_UP_CMD)).thenReturn(user)
@@ -34,7 +34,7 @@ class AuthenticationServiceAdapterTest {
     }
 
     @Test
-    fun logIn_whenUserLogInQry_ShouldFindAndReturnAuthenticationResponse() {
+    internal fun logIn_whenUserLogInQry_ShouldFindAndReturnAuthenticationResponse() {
         val user = buildUser()
         val expected = AuthenticationResponse.map(user, ISSUER)
         `when`(userRepositoryPort.find(USER_LOG_IN_QRY)).thenReturn(user)

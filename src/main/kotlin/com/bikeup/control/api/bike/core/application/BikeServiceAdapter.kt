@@ -16,22 +16,22 @@ class BikeServiceAdapter(
 ) : BikeServicePort {
     override fun save(bikeCreateCmd: BikeCreateCmd): BikeResponse {
         val bikeCreated = bikeRepositoryPort.save(bikeCreateCmd)
-        return BikeResponse.build(bikeCreated)
+        return BikeResponse.map(bikeCreated)
     }
 
     override fun update(bikeUpdateCmd: BikeUpdateCmd): BikeResponse {
         val bikeUpdated = bikeRepositoryPort.update(bikeUpdateCmd)
-        return BikeResponse.build(bikeUpdated)
+        return BikeResponse.map(bikeUpdated)
     }
 
     override fun find(userId: String): List<BikeResponse> {
         val bikes = bikeRepositoryPort.find(userId)
-        return bikes.map { BikeResponse.build(it) }
+        return bikes.map { BikeResponse.map(it) }
     }
 
     override fun find(userId: String, bikeId: String): BikeResponse {
         val bike = bikeRepositoryPort.find(userId, bikeId)
-        return BikeResponse.build(bike)
+        return BikeResponse.map(bike)
     }
 
     override fun delete(userId: String, bikeId: String) = bikeRepositoryPort.delete(userId, bikeId)
@@ -39,9 +39,9 @@ class BikeServiceAdapter(
     override fun increaseDistance(userId: String, bikeId: String, distance: Double): BikeResponse {
         val bike = bikeRepositoryPort.find(userId, bikeId).increaseDistance(distance)
 
-        bike.equipments.forEach { equipmentRepositoryPort.update(EquipmentUpdateCmd.build(it)) }
+        bike.equipments.forEach { equipmentRepositoryPort.update(EquipmentUpdateCmd.map(it)) }
 
-        return update(BikeUpdateCmd.build(bike).addUserId(userId))
+        return update(BikeUpdateCmd.map(bike))
     }
 
 }

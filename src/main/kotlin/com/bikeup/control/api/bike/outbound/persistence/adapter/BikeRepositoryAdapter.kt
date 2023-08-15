@@ -9,7 +9,6 @@ import com.bikeup.control.api.bike.core.domain.model.Bike
 import com.bikeup.control.api.bike.outbound.persistence.entity.BikeEntity
 import com.bikeup.control.api.bike.outbound.persistence.repository.BikeEntityRepository
 import jakarta.enterprise.context.ApplicationScoped
-import jakarta.ws.rs.BadRequestException
 
 @ApplicationScoped
 class BikeRepositoryAdapter(
@@ -48,11 +47,11 @@ class BikeRepositoryAdapter(
 
     override fun delete(userId: String, bikeId: String) = bikeEntityRepository.deleteByIdAndUserId(bikeId, userId)
 
-    fun checkIfExists(bikeId: String?) {
+    fun checkExists(bikeId: String?) {
         check(bikeId != null) { "BikeId must exist" }
 
-        if (bikeEntityRepository.checkIfExists(bikeId))
-            throw BadRequestException("Bike with id $bikeId not exists")
+        if (bikeEntityRepository.checkNotExists(bikeId))
+            throw BikeNotFoundException("Bike with id $bikeId not exists")
     }
 
     private fun addEquipments(bikeEntity: BikeEntity): Bike {

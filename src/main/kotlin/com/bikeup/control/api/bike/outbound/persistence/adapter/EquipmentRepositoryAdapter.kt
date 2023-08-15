@@ -15,7 +15,7 @@ class EquipmentRepositoryAdapter(
     private val equipmentEntityRepository: EquipmentEntityRepository
 ) : EquipmentRepositoryPort {
     override fun save(equipmentCreateCmd: EquipmentCreateCmd): Equipment {
-        bikeRepositoryAdapter.checkIfExists(equipmentCreateCmd.bikeId)
+        bikeRepositoryAdapter.checkExists(equipmentCreateCmd.bikeId)
 
         val equipmentEntity = EquipmentEntity.create(equipmentCreateCmd)
         equipmentEntityRepository.persist(equipmentEntity)
@@ -29,7 +29,7 @@ class EquipmentRepositoryAdapter(
     }
 
     override fun update(equipmentUpdateCmd: EquipmentUpdateCmd): Equipment {
-        bikeRepositoryAdapter.checkIfExists(equipmentUpdateCmd.bikeId)
+        bikeRepositoryAdapter.checkExists(equipmentUpdateCmd.bikeId)
 
         val equipmentEntity = equipmentEntityRepository.findByPK(equipmentUpdateCmd.id, equipmentUpdateCmd.bikeId!!)
             ?: throw EquipmentNotFoundException("Equipment with id ${equipmentUpdateCmd.id} not exists")

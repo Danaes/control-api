@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class AuthenticationResponseTest {
 
     @Test
-    fun map_whenUserAndIssuerAreGiven_shouldReturnAuthenticationResponse() {
+    internal fun map_whenUserAndIssuerAreGiven_shouldReturnAuthenticationResponse() {
         val user = UserMother.of()
         val issuer = "https://bikeup.com/issuer"
 

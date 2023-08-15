@@ -10,12 +10,12 @@ import org.junit.jupiter.api.assertThrows
 class UserSingUpCmdTest {
 
     @Test
-    fun init_whenParametersAreCorrect_shouldReturnUserSingUpCmd() {
+    internal fun init_whenParametersAreCorrect_shouldReturnUserSingUpCmd() {
         assertDoesNotThrow { UserSingUpCmdMother.of() }
     }
 
     @Test
-    fun init_whenUsernameIsBlank_shouldThrowBadRequestException() {
+    internal fun init_whenUsernameIsBlank_shouldThrowBadRequestException() {
         val expected = "Username parameter may not be blank"
 
         val exception = assertThrows<BadRequestException> { UserSingUpCmdMother.of(username = "") }
@@ -24,7 +24,7 @@ class UserSingUpCmdTest {
     }
 
     @Test
-    fun init_whenSurnameIsBlank_shouldThrowBadRequestException() {
+    internal fun init_whenSurnameIsBlank_shouldThrowBadRequestException() {
         val expected = "Surname parameter may not be blank"
 
         val exception = assertThrows<BadRequestException> { UserSingUpCmdMother.of(surname = "") }
@@ -33,7 +33,7 @@ class UserSingUpCmdTest {
     }
 
     @Test
-    fun init_whenEmailIsBlank_shouldThrowBadRequestException() {
+    internal fun init_whenEmailIsBlank_shouldThrowBadRequestException() {
         val expected = "Email parameter may not be blank"
 
         val exception = assertThrows<BadRequestException> { UserSingUpCmdMother.of(email = "") }
@@ -42,7 +42,7 @@ class UserSingUpCmdTest {
     }
 
     @Test
-    fun init_whenPasswordIsBlank_shouldThrowBadRequestException() {
+    internal fun init_whenPasswordIsBlank_shouldThrowBadRequestException() {
         val expected = "Password parameter may not be blank"
 
         val exception = assertThrows<BadRequestException> { UserSingUpCmdMother.of(password = "") }

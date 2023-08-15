@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class UserEntityTest {
 
     @Test
-    fun create_whenUserSingUpCmd_shouldReturnUserEntity() {
+    internal fun create_whenUserSingUpCmd_shouldReturnUserEntity() {
         val userSingUpCmd = UserSingUpCmdMother.of()
 
         val result = UserEntity.create(userSingUpCmd)
@@ -24,7 +24,7 @@ class UserEntityTest {
     }
 
     @Test
-    fun toDomain_whenMethodIsInvoked_shouldReturnUser() {
+    internal fun toDomain_whenMethodIsInvoked_shouldReturnUser() {
         val userEntity = UserEntity.create(UserSingUpCmdMother.of())
 
         val result = userEntity.toDomain()
