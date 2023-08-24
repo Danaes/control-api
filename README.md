@@ -36,11 +36,17 @@
 - **Authorization of endpoints** [#550cbb3](https://github.com/Danaes/control-api/commit/550cbb3ea1fd368845f237faa3c627e5ca708561)
   - Add @RolesAllowed annotation
 
----
-# In progress task
-- **Testing**
+- **Testing** [#7813f64](https://github.com/Danaes/control-api/commit/7813f640280b56593885a9de57bbcfb03cd572b5)
   - Unit tests
   - Integration tests
+
+---
+# In progress task
+
+- **Event bus**
+  - Create event
+  - Send event
+  - Receive event
 
 ---
 # Todo tasks
