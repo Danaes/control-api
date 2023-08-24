@@ -6,7 +6,6 @@ import com.bikeup.control.api.authentication.outbound.persistence.entity.UserEnt
 import io.quarkus.test.junit.QuarkusTest
 import jakarta.inject.Inject
 import org.bson.types.ObjectId
-import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -17,7 +16,7 @@ import org.junit.jupiter.params.provider.MethodSource
 
 @QuarkusTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class UserEntityRepositoryTest {
+class UserEntityRepositoryIT {
 
     @Inject
     private lateinit var sut: UserEntityRepository
@@ -68,11 +67,6 @@ class UserEntityRepositoryTest {
         val result = sut.checkNotExists(ObjectId().toString())
 
         assertTrue(result)
-    }
-
-    @AfterAll
-    fun tearDown() {
-        sut.delete(USER_ENTITY)
     }
 
     private companion object {

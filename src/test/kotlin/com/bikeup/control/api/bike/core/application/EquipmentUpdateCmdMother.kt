@@ -9,10 +9,10 @@ object EquipmentUpdateCmdMother {
     fun of(
         id: String = ObjectId().toString(),
         bikeId: String? = null,
-        brand: String = "SRAM",
-        model: String = "GX AXS",
-        distance: Double = 0.0,
-        type: EquipmentType = EquipmentType.ELECTRONIC_GEAR_SHIFTING_SYSTEM
+        brand: String? = null,
+        model: String? = null,
+        distance: Double? = null,
+        type: EquipmentType? = null
     ): EquipmentUpdateCmd =
         EquipmentUpdateCmd(
             id = id,

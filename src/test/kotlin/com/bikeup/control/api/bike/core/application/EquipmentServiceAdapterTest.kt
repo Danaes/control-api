@@ -3,6 +3,7 @@ package com.bikeup.control.api.bike.core.application
 import com.bikeup.control.api.bike.core.application.port.output.persistence.EquipmentRepositoryPort
 import com.bikeup.control.api.bike.core.application.usecase.EquipmentResponse
 import com.bikeup.control.api.bike.core.domain.EquipmentMother
+import com.bikeup.control.api.bike.core.domain.valueobject.EquipmentType
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -40,7 +41,9 @@ class EquipmentServiceAdapterTest {
 
     @Test
     internal fun update_whenEquipmentUpdateCmd_shouldReturnEquipmentResponse() {
-        val equipmentUpdateCmd = EquipmentUpdateCmdMother.of()
+        val equipmentUpdateCmd = EquipmentUpdateCmdMother.of(
+            brand = "SRAM", model = "GX", distance = 0.0, type = EquipmentType.ELECTRONIC_GEAR_SHIFTING_SYSTEM
+        )
         val equipment = EquipmentMother.of(
             brand = equipmentUpdateCmd.brand!!,
             model = equipmentUpdateCmd.model!!,

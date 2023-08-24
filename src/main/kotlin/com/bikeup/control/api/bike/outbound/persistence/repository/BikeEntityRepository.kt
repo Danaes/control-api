@@ -11,7 +11,7 @@ class BikeEntityRepository : PanacheMongoRepository<BikeEntity> {
     fun findByPK(id: String, userId: String): BikeEntity? =
         find("_id = ?1 and userId = ?2", id, userId).firstResult()
 
-    fun checkNotExists(id: String): Boolean = count("_id", id) != 1L
+    fun checkNotExists(id: String): Boolean = find("_id", id).list().isEmpty()
     fun deleteByIdAndUserId(id: String, userId: String) {
         delete("_id = ?1 and userId = ?2", id, userId)
     }
