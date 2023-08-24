@@ -13,7 +13,7 @@ import java.time.Instant
 
 @MongoEntity(collection = "users")
 data class UserEntity @BsonCreator constructor(
-    @BsonId var id: String,
+    @BsonId val id: String,
     @BsonProperty("username") val username: String,
     @BsonProperty("surname") val surname: String,
     @BsonProperty("email") val email: String,

@@ -11,14 +11,14 @@ data class BikeResponse(
     val equipments: List<EquipmentResponse>
 ) {
     companion object {
-        fun build(bike: Bike): BikeResponse =
+        fun map(bike: Bike): BikeResponse =
             BikeResponse(
                 id = bike.id,
                 brand = bike.brand,
                 model = bike.model,
                 year = bike.year,
                 distance = bike.distance,
-                equipments = bike.equipments.map { EquipmentResponse.build(it) },
+                equipments = bike.equipments.map { EquipmentResponse.map(it) },
             )
     }
 }

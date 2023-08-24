@@ -27,14 +27,17 @@ class EquipmentResource(
 
     @PATCH
     @Consumes(MediaType.APPLICATION_JSON)
-    internal fun updateBike(@PathParam("bikeId") bikeId: String, equipmentUpdateCmd: EquipmentUpdateCmd): Response {
+    internal fun updateEquipment(
+        @PathParam("bikeId") bikeId: String,
+        equipmentUpdateCmd: EquipmentUpdateCmd
+    ): Response {
         val response = equipmentServicePort.update(equipmentUpdateCmd.addBikeId(bikeId))
         return Response.ok(response).status(Response.Status.ACCEPTED).build()
     }
 
     @DELETE
     @Path("/{equipmentId}")
-    internal fun deleteBike(
+    internal fun deleteEquipment(
         @PathParam("bikeId") bikeId: String,
         @PathParam("equipmentId") equipmentId: String
     ): Response {

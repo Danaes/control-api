@@ -13,7 +13,7 @@ data class EquipmentResponse(
     val type: EquipmentType
 ) {
     companion object {
-        fun build(equipment: Equipment) = EquipmentResponse(
+        fun map(equipment: Equipment) = EquipmentResponse(
             id = equipment.id,
             brand = equipment.brand,
             model = equipment.model,

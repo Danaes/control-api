@@ -11,9 +11,12 @@ import org.jboss.logging.Logger
 
 @Provider
 class BikeExceptionHandler : ExceptionMapper<BikeException> {
+
+    private val log = Logger.getLogger(BikeExceptionHandler::class.java)
+
     override fun toResponse(exception: BikeException): Response {
         val errorResponse = getErrorResponse(exception)
-        LOG.error(errorResponse.toString())
+        log.error(errorResponse.toString())
 
         return errorResponse.toResponse()
     }
@@ -27,12 +30,8 @@ class BikeExceptionHandler : ExceptionMapper<BikeException> {
                 )
 
             else -> ErrorResponse(
-                message = exception.message ?: "Internal server error",
+                message = exception.message!!,
                 status = Response.Status.INTERNAL_SERVER_ERROR
             )
         }
-
-    private companion object {
-        val LOG: Logger = Logger.getLogger(BikeExceptionHandler::class.java)
-    }
 }

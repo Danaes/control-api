@@ -13,12 +13,12 @@ class EquipmentServiceAdapter(
 ) : EquipmentServicePort {
     override fun save(equipmentCreateCmd: EquipmentCreateCmd): EquipmentResponse {
         val equipmentCreated = equipmentRepositoryPort.save(equipmentCreateCmd)
-        return EquipmentResponse.build(equipmentCreated)
+        return EquipmentResponse.map(equipmentCreated)
     }
 
     override fun update(equipmentUpdateCmd: EquipmentUpdateCmd): EquipmentResponse {
         val equipmentUpdated = equipmentRepositoryPort.update(equipmentUpdateCmd)
-        return EquipmentResponse.build(equipmentUpdated)
+        return EquipmentResponse.map(equipmentUpdated)
     }
 
     override fun delete(bikeId: String, equipmentId: String) = equipmentRepositoryPort.delete(equipmentId, bikeId)
