@@ -105,10 +105,10 @@ class BikeResourceIT {
         `when`(bikeRepositoryPort.find(USER_ID, BIKE.id)).thenReturn(BIKE)
         `when`(bikeRepositoryPort.update(BikeUpdateCmd.map(expected))).thenReturn(expected)
 
-        val response = RestAssured.given().`when`().queryParam("distance", newDistance).patch(basePath)
+        RestAssured.given()
+            .`when`().queryParam("distance", newDistance).patch(basePath)
+            .then().statusCode(Status.ACCEPTED.statusCode)
 
-        val bike = response.then().statusCode(Status.ACCEPTED.statusCode).extract().`as`(BikeResponse::class.java)
-        assertResponse(expected, bike)
         verify(bikeRepositoryPort).find(USER_ID, BIKE.id)
         verify(bikeRepositoryPort).update(BikeUpdateCmd.map(expected))
     }

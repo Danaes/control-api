@@ -1,11 +1,9 @@
 package com.bikeup.control.api.bike.core.application
 
 import com.bikeup.control.api.bike.core.application.port.output.persistence.BikeRepositoryPort
-import com.bikeup.control.api.bike.core.application.port.output.persistence.EquipmentRepositoryPort
+import com.bikeup.control.api.bike.core.application.port.output.publisher.equipment.BikeUpdatedEventPublisherPort
 import com.bikeup.control.api.bike.core.application.usecase.BikeResponse
-import com.bikeup.control.api.bike.core.application.usecase.EquipmentUpdateCmd
 import com.bikeup.control.api.bike.core.domain.BikeMother
-import com.bikeup.control.api.bike.core.domain.EquipmentMother
 import org.bson.types.ObjectId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -15,16 +13,16 @@ import org.mockito.Mockito.*
 class BikeServiceAdapterTest {
 
     private val bikeRepositoryPort = mock<BikeRepositoryPort>()
-    private val equipmentRepositoryPort = mock<EquipmentRepositoryPort>()
+    private val bikeUpdatedEventPublisherPort = mock<BikeUpdatedEventPublisherPort>()
 
     private lateinit var sut: BikeServiceAdapter
 
     @BeforeEach
     internal fun init() {
         reset(bikeRepositoryPort)
-        reset(equipmentRepositoryPort)
+        reset(bikeUpdatedEventPublisherPort)
 
-        sut = BikeServiceAdapter(bikeRepositoryPort, equipmentRepositoryPort)
+        sut = BikeServiceAdapter(bikeRepositoryPort, bikeUpdatedEventPublisherPort)
     }
 
     @Test
@@ -98,7 +96,6 @@ class BikeServiceAdapterTest {
 
     @Test
     internal fun increaseDistance_whenDistance_shouldReturnBikeResponseWithMoreDistance() {
-        val equipment = EquipmentMother.of()
         val newDistance = 100.0
         val bikeUpdateCmd = BikeUpdateCmdMother.of(
             id = BIKE.id,
@@ -108,16 +105,11 @@ class BikeServiceAdapterTest {
             year = BIKE.year,
             distance = BIKE.distance.plus(newDistance)
         )
-        val updatedEquipment = equipment.copy(distance = equipment.distance.plus(newDistance))
-        val updatedBike = BIKE.copy(distance = BIKE.distance.plus(newDistance), equipments = listOf(updatedEquipment))
-        val expected = BikeResponse.map(updatedBike)
-        `when`(bikeRepositoryPort.find(USER_ID, BIKE_ID)).thenReturn(BIKE.copy(equipments = listOf(equipment)))
-        `when`(equipmentRepositoryPort.update(EquipmentUpdateCmd.map(updatedEquipment))).thenReturn(updatedEquipment)
-        `when`(bikeRepositoryPort.update(bikeUpdateCmd)).thenReturn(updatedBike)
+        `when`(bikeRepositoryPort.find(USER_ID, BIKE_ID)).thenReturn(BIKE)
 
-        val result = sut.increaseDistance(USER_ID, BIKE_ID, newDistance)
+        sut.increaseDistance(USER_ID, BIKE_ID, newDistance)
 
-        assertEquals(expected, result)
+        verify(bikeRepositoryPort).update(bikeUpdateCmd)
     }
 
     private companion object {

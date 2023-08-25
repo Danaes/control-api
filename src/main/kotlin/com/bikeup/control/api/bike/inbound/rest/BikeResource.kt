@@ -49,8 +49,8 @@ class BikeResource(
         @PathParam("bikeId") bikeId: String,
         @QueryParam("distance") distance: Double
     ): Response {
-        val response = bikeServicePort.increaseDistance(userId, bikeId, distance)
-        return Response.ok(response).status(Response.Status.ACCEPTED).build()
+        bikeServicePort.increaseDistance(userId, bikeId, distance)
+        return Response.ok().status(Response.Status.ACCEPTED).build()
     }
 
     @DELETE
