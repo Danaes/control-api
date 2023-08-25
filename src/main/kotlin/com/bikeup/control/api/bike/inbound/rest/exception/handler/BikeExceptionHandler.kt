@@ -1,4 +1,4 @@
-package com.bikeup.control.api.bike.inbound.exception.handler
+package com.bikeup.control.api.bike.inbound.rest.exception.handler
 
 import com.bikeup.control.api.bike.core.domain.exception.BikeException
 import com.bikeup.control.api.bike.core.domain.exception.BikeNotFoundException

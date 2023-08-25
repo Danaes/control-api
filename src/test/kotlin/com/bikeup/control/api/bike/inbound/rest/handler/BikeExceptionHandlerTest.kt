@@ -1,8 +1,9 @@
-package com.bikeup.control.api.bike.inbound.exception.handler
+package com.bikeup.control.api.bike.inbound.rest.handler
 
 import com.bikeup.control.api.bike.core.domain.exception.BikeException
 import com.bikeup.control.api.bike.core.domain.exception.BikeNotFoundException
 import com.bikeup.control.api.bike.core.domain.exception.EquipmentNotFoundException
+import com.bikeup.control.api.bike.inbound.rest.exception.handler.BikeExceptionHandler
 import jakarta.ws.rs.core.Response.Status
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.TestInstance

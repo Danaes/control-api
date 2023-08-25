@@ -1,4 +1,4 @@
-package com.bikeup.control.api.authentication.inbound.exception.handler
+package com.bikeup.control.api.authentication.inbound.rest.exception.handler
 
 import com.bikeup.control.api.authentication.core.domain.exception.AuthenticationException
 import com.bikeup.control.api.authentication.core.domain.exception.UserNotFoundException

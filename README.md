@@ -1,22 +1,27 @@
 # Done tasks
 
-- **Hexagonal architecture** [#6521d6e](https://github.com/Danaes/control-api/commit/6521d6e45d129d13a4933ed95fb0aef24f7532fa)
+- **Architecture** [#6521d6e](https://github.com/Danaes/control-api/commit/6521d6e45d129d13a4933ed95fb0aef24f7532fa)
 ```mermaid
-  graph LR
-    c1 -- primary ports ---> i1
-    c1 -- secondary ports ---> o1
-    o1 --> d1[(Database)]
-    i1 --> HTTPS
+  graph RL
+  c1 <-- primary ports ---> i1
+  i3 -- primary ports ---> c1
+  c1 <-- secondary ports ---> o1
+  c1 -- secondary ports ---> o2
+  o1 <--> d1[(Database)]
+  o2 --> d2[(eventBus)]
+  i1 <--> HTTPS
+  d2 --> i3
     
     subgraph outbound
       o1((persistence))
+      o2((publisher))
     end
     subgraph inbound
       i1((rest))
-      i2((handler))
+      i3((listener))
     end
     subgraph core
-        c2 --> c1
+      c2 <--> c1
         c1((application))
         c2((domain))
     end
@@ -40,13 +45,13 @@
   - Unit tests
   - Integration tests
 
----
-# In progress task
-
 - **Event bus**
   - Create event
   - Send event
   - Receive event
+---
+# In progress task
+
 
 ---
 # Todo tasks
