@@ -45,7 +45,7 @@
   - Unit tests
   - Integration tests
 
-- **Event bus**
+- **Event bus** [#3dde708](https://github.com/Danaes/control-api/commit/3dde708283331dd600d827b7f4b7f485914e02f7)
   - Create event
   - Send event
   - Receive event
