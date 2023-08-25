@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  build:
+  run-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,5 +18,5 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
-      - name: Build with Maven
+      - name: Verify with Maven
         run: mvn --batch-mode --update-snapshots verify
